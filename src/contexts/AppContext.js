@@ -5,13 +5,13 @@ export const useAppContext = () => useContext(AppContext);
 
 // React Context API for managing global state
 const AppContextProvider = ({ children }) => {
-  const [open, setOpen] = useState(false);
+  const [loadingRiskProfiles, setLoadingRiskProfiles] = useState(true);
 
   return (
     <AppContext.Provider
       value={{
-        open,
-        setOpen: (...p) => setOpen(...p)
+        loadingRiskProfiles,
+        setLoadingRiskProfiles: (...p) => setLoadingRiskProfiles(...p)
       }}
     >
       {children}

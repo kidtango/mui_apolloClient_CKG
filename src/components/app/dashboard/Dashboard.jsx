@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -24,13 +24,22 @@ import chevronLogo from '../../../assets/production/chevron_logo.svg';
 import { useAppContext } from '../../../contexts/AppContext';
 import AppFeedbackModaldal from './appFeedbackModal/AppFeedbackModal';
 import Modal from './modal/Modal';
+import RiskProfileClassifier from './riskProfileClassifier/RiskProfileClassifier';
+
+const ListItemLink = props => (
+  <ListItem button component='a' {...props}></ListItem>
+);
 
 const Dashboard = () => {
   const classes = useStyles();
-  const { open, setOpen } = useAppContext();
+  const [open, setOpen] = useState(false);
 
   const handleDrawerOpen = () => {
-    console.log('handle open drawer');
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
   };
 
   return (
@@ -40,8 +49,8 @@ const Dashboard = () => {
         position='fixed'
         className={classNames(classes.appBar, { [classes.appBarShift]: open })}
       >
-        <Modal />
-        <AppFeedbackModaldal />
+        {/* <Modal />
+        <AppFeedbackModaldal /> */}
         <Toolbar disableGutters={!open}>
           <IconButton
             color='inherit'
@@ -54,25 +63,84 @@ const Dashboard = () => {
           <h3 className='sectionTitle'>
             Upstream Projects and Operation Knowledge
           </h3>
-          <img src={chevronLogo} className={'maanaLogo'} alt='Chevron logo' />
+          <img src={chevronLogo} className={'chevronLogo'} alt='Chevron logo' />
         </Toolbar>
-        <Drawer
-          variant='permanent'
-          className={classNames(classes.drawer, {
+      </AppBar>
+      <Drawer
+        variant='permanent'
+        className={classNames(classes.drawer, {
+          [classes.drawerOpen]: open,
+          [classes.drawerClose]: !open
+        })}
+        classes={{
+          paper: classNames({
             [classes.drawerOpen]: open,
             [classes.drawerClose]: !open
-          })}
-          classes={{
-            paper: classNames({
-              [classes.drawerOpen]: open,
-              [classes.drawerClose]: !open
-            })
-          }}
-          open={open}
-        >
-          <div className={classes.toolbar}>diviidid</div>
-        </Drawer>
-      </AppBar>
+          })
+        }}
+        open={open}
+      >
+        <div className={classes.toolbar}>
+          <IconButton onClick={handleDrawerClose}>
+            {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+          </IconButton>
+        </div>
+        <Divider />
+        <List>
+          <ListItemLink
+            key={'About'}
+            href='https://iris.knowledge.maana.io/'
+            target='_blank'
+          >
+            <ListItemIcon>
+              <InfoIcon />
+            </ListItemIcon>
+            <ListItemText primary={'About'} />
+          </ListItemLink>
+          <ListItem button>
+            <ListItemIcon>
+              <RefreshIcon />
+            </ListItemIcon>
+            <ListItemText primary={'Reset'} />
+          </ListItem>
+          <ListItem button className='riskKnowledge'>
+            <ListItemIcon>
+              <Brightness1Icon className={'knowledgeFilterIcon'} />
+            </ListItemIcon>
+            <ListItemText primary={'Risk Knowledge'} />
+          </ListItem>
+          <ListItem
+            button
+            // onClick={e => {
+            //   showMainComponentsByKnowledgeSource('technical');
+            // }}
+            className='technicalKnowledge'
+          >
+            <ListItemIcon>
+              <Brightness1Icon className='knowledgeFilterIcon' />
+            </ListItemIcon>
+            <ListItemText primary={'Technical Knowledge'} />
+          </ListItem>
+          <ListItem
+            button
+            // onClick={e => {
+            //   this.props.showMainComponentsByKnowledgeSource('business');
+            // }}
+            className='businessKnowledge'
+          >
+            <ListItemIcon>
+              <Brightness1Icon className='knowledgeFilterIcon' />
+            </ListItemIcon>
+            <ListItemText primary={'Business Knowledge'} />
+          </ListItem>
+        </List>
+      </Drawer>
+      <main className={classes.content}>
+        <div className={classes.toolbar} />
+        <div className={classes.root}>
+          <RiskProfileClassifier />
+        </div>
+      </main>
     </div>
   );
 };
