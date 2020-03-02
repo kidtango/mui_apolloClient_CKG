@@ -12,6 +12,7 @@ import usePrevious from '../../../../utils/custom_hooks/usePrevious';
 import { useStyles } from './riskProfileClassifierStyle';
 import RiskProfilesList from './riskProfilesList/RiskProfilesList';
 import KnowledgeTree from './knowledgeTree/KnowledgeTree';
+import RiskMatrix from './riskMatrix/RiskMatrix';
 
 const RiskProfileClassifier = () => {
   const [mainWidgetState, setMainWidgetState] = useState({
@@ -104,7 +105,7 @@ const RiskProfileClassifier = () => {
                   <KeyboardArrowDownIcon className='ArrowDownIcon' />
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
-                  {/* <RiskMatrix /> */}
+                  {/* <RiskMatrix /> risk matrix */}
                 </ExpansionPanelDetails>
               </ExpansionPanel>
               <ExpansionPanel
